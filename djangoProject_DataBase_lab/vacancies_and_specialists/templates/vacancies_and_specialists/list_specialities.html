@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация</title>
+    <style>
+        /* Ваши стили сюда */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #4a69bd, #6a11cb);
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .navbar a {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .navbar a:active {
+            transform: translateY(1px);
+        }
+
+        .form-container {
+            width: 80%;
+            max-width: 900px;
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4a69bd;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #6a11cb;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #c0392b;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            border-radius: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff6a3d, #e3267d);
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <!-- Контейнер с данными -->
+    <div class="form-container">
+        <h2>Информация о специализациях</h2>
+
+        <!-- Таблица для вывода данных -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Название Специализации</th>
+                    <th>Количество Работников</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for speciality in specialities %}
+                <tr>
+                    <td>{{ speciality.1 }}</td>
+                    <td>{{ speciality.2 }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+</body>
+</html>

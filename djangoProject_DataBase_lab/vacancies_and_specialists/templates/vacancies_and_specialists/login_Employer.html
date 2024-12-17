@@ -1,0 +1,307 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Работодатель форма</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>Поля для регистрации работадателя</h1>#}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    <div class="form-error">{{ page.non_field_errors }}</div>#}
+{#    {% for i in employerr %}#}
+{#        <p><label class="form-label" for="{{ i.id_for_label }}">{{ i.label }}</label>{{ i }} </p>#}
+{#        <div class="form-error">{{ i.errors }}</div>#}
+{#    {% endfor %}#}
+{#    <p>#}
+{#        <button type="submit"> Применить</button>#}
+{#    </p>#}
+{#</form>#}
+{#<a href="{% url "main" %}">Принять и простить</a>#}
+{#</body>#}
+{#</html>#}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Работника форма</title>#}
+{#    <style>#}
+{#        /* Общие стили для страницы */#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            background-color: #f4f7fa;#}
+{#            display: flex;#}
+{#            justify-content: center;#}
+{#            align-items: center;#}
+{#            height: 100vh;#}
+{#            margin: 0;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        /* Обертка для формы */#}
+{#        .form-container {#}
+{#            background-color: white;#}
+{#            padding: 30px;#}
+{#            border-radius: 10px;#}
+{#            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);#}
+{#            width: 100%;#}
+{#            max-width: 600px;#}
+{#            animation: fadeIn 1s ease-out;#}
+{#        }#}
+{##}
+{#        /* Анимация появления формы */#}
+{#        @keyframes fadeIn {#}
+{#            0% { opacity: 0; }#}
+{#            100% { opacity: 1; }#}
+{#        }#}
+{##}
+{#        /* Стили для заголовка */#}
+{#        h1 {#}
+{#            text-align: center;#}
+{#            color: #4CAF50;#}
+{#            font-size: 24px;#}
+{#            margin-bottom: 20px;#}
+{#        }#}
+{##}
+{#        /* Стиль для каждой пары label + input */#}
+{#        .form-group {#}
+{#            margin-bottom: 20px;#}
+{#            animation: slideIn 0.5s ease-in-out;#}
+{#        }#}
+{##}
+{#        /* Анимация для появления полей формы */#}
+{#        @keyframes slideIn {#}
+{#            0% { transform: translateX(-100%); }#}
+{#            100% { transform: translateX(0); }#}
+{#        }#}
+{##}
+{#        /* Стили для label */#}
+{#        .form-label {#}
+{#            display: block;#}
+{#            margin-bottom: 8px;#}
+{#            font-size: 14px;#}
+{#            font-weight: bold;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        /* Стили для полей ввода */#}
+{#        input[type="text"], input[type="number"], input[type="decimal"], textarea {#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            border: 1px solid #ccc;#}
+{#            border-radius: 5px;#}
+{#            font-size: 14px;#}
+{#            margin-top: 5px;#}
+{#            transition: border-color 0.3s ease;#}
+{#        }#}
+{##}
+{#        /* При фокусе на поле меняем цвет границы */#}
+{#        input[type="text"]:focus, input[type="number"]:focus, input[type="decimal"]:focus, textarea:focus {#}
+{#            border-color: #4CAF50;#}
+{#            outline: none;#}
+{#        }#}
+{##}
+{#        /* Стиль для кнопки отправки */#}
+{#        button[type="submit"] {#}
+{#            background-color: #4CAF50;#}
+{#            color: white;#}
+{#            border: none;#}
+{#            padding: 10px 20px;#}
+{#            border-radius: 5px;#}
+{#            font-size: 16px;#}
+{#            cursor: pointer;#}
+{#            width: 100%;#}
+{#            transition: background-color 0.3s ease;#}
+{#        }#}
+{##}
+{#        /* При наведении на кнопку меняем цвет */#}
+{#        button[type="submit"]:hover {#}
+{#            background-color: #45a049;#}
+{#        }#}
+{##}
+{#        /* Ошибки формы */#}
+{#        .form-error {#}
+{#            color: red;#}
+{#            font-size: 12px;#}
+{#            margin-top: 5px;#}
+{#        }#}
+{##}
+{#        /* Стиль для ссылки */#}
+{#        .form-link {#}
+{#            display: block;#}
+{#            text-align: center;#}
+{#            margin-top: 20px;#}
+{#        }#}
+{##}
+{#        .form-link a {#}
+{#            color: #4CAF50;#}
+{#            text-decoration: none;#}
+{#        }#}
+{##}
+{#        .form-link a:hover {#}
+{#            text-decoration: underline;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="form-container">#}
+{#    <h1>Поля для регистрации работника</h1>#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        <div class="form-error">{{ page.non_field_errors }}</div>#}
+{#        {% for field in employerr %}#}
+{#            <div class="form-group">#}
+{#                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>#}
+{#                {{ field }}#}
+{#                <div class="form-error">{{ field.errors }}</div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#        <p>#}
+{#            <button type="submit">Применить</button>#}
+{#        </p>#}
+{#    </form>#}
+{##}
+{#    <div class="form-link">#}
+{#        <a href="{% url 'main' %}">Принять и простить</a>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма работодателя</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 120vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        /* Обертка для формы */
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Анимация появления формы */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Стили для заголовка */
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Стиль для каждой пары label + input */
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        /* Анимация для появления полей формы */
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Стили для label */
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Стили для полей ввода */
+        input[type="text"], input[type="number"], input[type="decimal"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 5px;
+            transition: border-color 0.3s ease;
+            background-color: #f4f7fa;
+        }
+
+        /* При фокусе на поле меняем цвет границы */
+        input[type="text"]:focus, input[type="number"]:focus, input[type="decimal"]:focus, textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        /* Стиль для кнопки отправки */
+        button[type="submit"] {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+
+        /* При наведении на кнопку меняем цвет */
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff6a3d, #e3267d);
+        }
+
+        /* Ошибки формы */
+        .form-error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Поля для регистрации работодателя</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-error">{{ page.non_field_errors }}</div>
+        {% for field in employerr %}
+            <div class="form-group">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                <div class="form-error">{{ field.errors }}</div>
+            </div>
+        {% endfor %}
+        <p>
+            <button type="submit">Применить</button>
+        </p>
+    </form>
+</div>
+
+</body>
+</html>

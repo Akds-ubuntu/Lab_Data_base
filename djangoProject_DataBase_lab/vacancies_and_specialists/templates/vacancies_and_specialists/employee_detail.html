@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробная информация о работнике</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+        .job-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        .job-details p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .job-details strong {
+            font-weight: bold;
+            color: #ff512f;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            border-radius: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff6a3d, #e3267d);
+        }
+        .delete-button {
+            background: linear-gradient(135deg, #e3267d, #ff512f);
+            margin-top: 20px;
+        }
+        .delete-button:hover {
+            background: linear-gradient(135deg, #ff6a3d, #ff512f);
+        }
+    </style>
+</head>
+<body>
+    <div class="job-details">
+        <h1>Информация о работнике</h1>
+        <p><strong>Имя:</strong> {{ worker.first_name }}</p>
+        <p><strong>Фамилия:</strong> {{ worker.last_name }}</p>
+        <p><strong>Должность:</strong> {{ worker.position }}</p>
+        <p><strong>Контакт:</strong> {{ worker.contact_info }}</p>
+        <h2>Специальности:</h2>
+        <ul>
+            {% for speciality in worker.speciality_titles %}
+                <li>{{ speciality }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="button-container">
+        <a href="{% url 'workers' %}" class="button">Вернуться к списку</a>
+        <a href="{% url 'changing_employee' slug_employee=worker.slug_employer %}" class="button">Изменить данные работника</a>
+    </div>
+
+    <!-- Форма для удаления работника -->
+    <div class="button-container">
+        <form method="post" >
+            {% csrf_token %}
+            <button type="submit" class="button delete-button">Удалить работника</button>
+        </form>
+    </div>
+</body>
+</html>

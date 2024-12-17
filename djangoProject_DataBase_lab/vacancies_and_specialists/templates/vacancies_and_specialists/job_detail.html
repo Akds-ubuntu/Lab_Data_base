@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Детали работы</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+        .job-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        .job-details p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .job-details strong {
+            font-weight: bold;
+            color: #ff512f;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            border-radius: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff6a3d, #e3267d);
+        }
+    </style>
+</head>
+<body>
+    <div class="job-details">
+        <h1>{{ job.0.0 }}</h1> <!-- Название работы -->
+        <p><strong>Работодатель:</strong> {{ job.0.1 }}</p>
+        <p><strong>Описание:</strong> {{ job.0.2 }}</p>
+        <p><strong>Местоположение:</strong> {{ job.0.3 }}</p>
+        <p><strong>Зарплата:</strong> {{ job.0.4 }}</p>
+    </div>
+
+    <div class="button-container">
+        <a href="{% url 'main' %}" class="button">Вернуться к списку</a>
+    </div>
+    <div class="button-container">
+        <form method="post" >
+            {% csrf_token %}
+            <button type="submit" class="button delete-button">Удалить работу</button>
+        </form>
+    </div>
+</body>
+</html>

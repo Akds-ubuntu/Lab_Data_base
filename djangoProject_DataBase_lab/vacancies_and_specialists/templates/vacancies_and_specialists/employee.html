@@ -1,0 +1,233 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Работы и Работодатели</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Список работ и работодателей</h1>#}
+{#    <form method="post">#}
+{#    {% csrf_token %}#}
+{#    <div class="form-error">{{ page.non_field_errors }}</div>#}
+{#    {% for i in query %}#}
+{#        <p><label class="form-label" for="{{ i.id_for_label }}">{{ i.label }}</label>{{ i }} </p>#}
+{#        <div class="form-error">{{ i.errors }}</div>#}
+{#    {% endfor %}#}
+{#    <p>#}
+{#        <button type="submit"> Искать</button>#}
+{#        <a href="{% url 'main' %}" class="button-link">Сбросить поиск</a>#}
+{#    </p>#}
+{#    </form>#}
+{#    <table>#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Работодатель</th>#}
+{#                <th>Название работы</th>#}
+{#                <th>Описание</th>#}
+{#                <th>Местоположение</th>#}
+{#                <th>Зарплата</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for row in jobs %}#}
+{#                <tr>#}
+{#                    <td>{{ row.1 }}</td>#}
+{#                    <td>{{ row.2 }}</td>#}
+{#                    <td>{{ row.3 }}</td>#}
+{#                    <td>{{ row.4 }}</td>#}
+{#                    <td>{{ row.5 }}</td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Работники</title>
+    <style>
+        /* Основные стили для страницы */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #4a69bd, #6a11cb); /* Плавный темный градиент */
+            color: #fff;
+            padding-top: 40px; /* Отступ сверху для контента */
+        }
+
+        /* Контейнер для кнопок навигации */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        /* Стили для кнопок навигации */
+        .navbar a {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #e74c3c; /* Красный фон для кнопок */
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #c0392b; /* Темный красный при наведении */
+            transform: translateY(-3px);
+        }
+
+        .navbar a:active {
+            transform: translateY(1px);
+        }
+
+        /* Стили для формы */
+        .form-container {
+            width: 80%;
+            max-width: 900px;
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Ошибки формы */
+        .form-error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Стили для таблицы */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4a69bd; /* Синий цвет для заголовков */
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #6a11cb; /* Плавный темный фиолетовый для четных строк */
+        }
+
+        /* Кнопка для сброса поиска */
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e74c3c; /* Красный фон для кнопки сброса */
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #c0392b; /* Темный красный при наведении */
+        }
+
+        /* Стили для кнопок в основной форме */
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff512f, #dd2476); /* Градиент для кнопок */
+            border-radius: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff6a3d, #e3267d); /* Градиент с темным оттенком для кнопки */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационная панель с кнопками -->
+    <div class="navbar">
+        <a href="#">Список работников</a>
+        <a href="{% url 'main' %}">Список работ</a>
+        <a href="{% url 'list_employers' %}">Список работодателей</a>
+        <a href="{% url 'login_Employer' %}">Добавить работодателя с работой</a>
+        <a href="{% url 'login_Employee' %}">Зарегистрировать работника</a>
+    </div>
+
+    <!-- Форма поиска -->
+    <div class="form-container">
+        <h1>Список работников</h1>
+{#        <form method="post">#}
+{#            {% csrf_token %}#}
+{#            <div class="form-error">{{ page.non_field_errors }}</div>#}
+{#            {% for i in workers %}#}
+{#                <p>#}
+{#                    <label class="form-label" for="{{ i.id_for_label }}">{{ i.label }}</label>{{ i }}#}
+{#                </p>#}
+{#                <div class="form-error">{{ i.errors }}</div>#}
+{#            {% endfor %}#}
+{#            <p>#}
+{#                <button type="submit">Искать</button>#}
+{#                <a href="{% url 'main' %}" class="button-link">Сбросить поиск</a>#}
+{#            </p>#}
+{#        </form>#}
+
+        <!-- Таблица с результатами поиска -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Квалификация</th>
+                    <th>Контактная информация</th>
+{#                    <th>Контактная информация</th>#}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in workers %}
+                    <tr>
+                        <td>{{ row.1 }}</td>
+                        <td>{{ row.2 }}</td>
+                        <td>{{ row.3 }}</td>
+                        <td>{{ row.4 }}</td>
+                        <td><a href="{% url 'employee' slug_employee=row.5 %}" class="button-link">Подробнее</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

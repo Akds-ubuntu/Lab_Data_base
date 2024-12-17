@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Работы и Работодатели</title>
+</head>
+<body>
+{#    <h1>Список работ и работодателей</h1>#}
+{#    <form method="post">#}
+{#    {% csrf_token %}#}
+{#    <div class="form-error">{{ page.non_field_errors }}</div>#}
+{#    {% for i in query %}#}
+{#        <p><label class="form-label" for="{{ i.id_for_label }}">{{ i.label }}</label>{{ i }} </p>#}
+{#        <div class="form-error">{{ i.errors }}</div>#}
+{#    {% endfor %}#}
+{#    <p>#}
+{#        <button type="submit"> Искать</button>#}
+{#    </p>#}
+{#    </form>#}
+    <table>
+        <thead>
+            <tr>
+                <th>Работодатель</th>
+                <th>Название работы</th>
+                <th>Описание</th>
+                <th>Местоположение</th>
+                <th>Зарплата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in jobs %}
+                <tr>
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.3 }}</td>
+                    <td>{{ row.4 }}</td>
+                    <td>{{ row.5 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
